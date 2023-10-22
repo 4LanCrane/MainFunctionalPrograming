@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -39,8 +40,27 @@ public class Main {
 
 
 
-        Student.PrintStudentsByCourseTypeFun(students);
+        //Student.PrintStudentsByCourseTypeFun(students);
 
+        System.out.print("enter student first name: ");
+        Scanner scanner = new Scanner(System.in);
+        String firstName = scanner.nextLine();
+
+        System.out.print("enter student last name: ");
+        String lastName = scanner.nextLine();
+
+        System.out.print("enter student age: ");
+        int age = scanner.nextInt();
+
+        System.out.print("enter student course: ");
+        CourseType course = CourseType.valueOf(scanner.next().toUpperCase());
+
+        System.out.print("enter student id: ");
+        int studentId = scanner.nextInt();
+        Student.addStudent(students, firstName, lastName, age, course, studentId);
+
+
+        Student.printStudentsGroupedByCourseType(students);
     }
 
 
@@ -73,25 +93,7 @@ public class Main {
 
 
 
-    public static void printStudentsGroupedByCourseType(ArrayList<Student> students){
-    //a hashmap and group students by course with course as the key
-        HashMap<CourseType,ArrayList<Student>> studentMap = new HashMap<>();
 
-        for (Student s : students){
-            if (studentMap.containsKey(s.course())){
-                studentMap.get(s.course()).add(s);
-            }else{
-                ArrayList<Student> temp = new ArrayList<>();
-                temp.add(s);
-                studentMap.put((CourseType) s.course(),temp);
-            }
-        }
-
-        for (Map.Entry<CourseType,ArrayList<Student>> entry : studentMap.entrySet()){
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-
-    }
 
 
 

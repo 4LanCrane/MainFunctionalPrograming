@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public record Student<courseType>(String firstName, String lastName, int age, courseType course, int studentId){
@@ -36,5 +38,25 @@ public static void removeStudent(ArrayList<Student> students, int studentId) {
         students.removeIf(s -> s.studentId() == studentId);
     }
 
+
+    public static void printStudentsGroupedByCourseType(ArrayList<Student> students){
+        //a hashmap and group students by course with course as the key
+        HashMap<CourseType,ArrayList<Student>> studentMap = new HashMap<>();
+
+        for (Student s : students){
+            if (studentMap.containsKey(s.course())){
+                studentMap.get(s.course()).add(s);
+            }else{
+                ArrayList<Student> temp = new ArrayList<>();
+                temp.add(s);
+                studentMap.put((CourseType) s.course(),temp);
+            }
+        }
+
+        for (Map.Entry<CourseType,ArrayList<Student>> entry : studentMap.entrySet()){
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+
+    }
 }
 
