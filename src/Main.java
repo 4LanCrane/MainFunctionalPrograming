@@ -61,38 +61,14 @@ public class Main {
 
 
         Student.printStudentsGroupedByCourseType(students);
+
+        System.out.println("Enter student id to remove: ");
+        int id = scanner.nextInt();
+        Student.removeStudent(students, id);
+        Student.printALl(students);
+
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Predicate <ArrayList<Student >> ageOver18 = age -> x.age
-
-
-
-
-
-
-
-
-
-
-
 
 
 

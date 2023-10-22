@@ -28,11 +28,6 @@ public static void addStudent(ArrayList<Student> students, String firstName, Str
     }
 
 
-    //method to add a student to the students arraylist
-    public static void addStudent(ArrayList<Student> students, Student student) {
-        students.add(student);
-    }
-
     //method to remove a student from the students arraylist by student id
 public static void removeStudent(ArrayList<Student> students, int studentId) {
         students.removeIf(s -> s.studentId() == studentId);
