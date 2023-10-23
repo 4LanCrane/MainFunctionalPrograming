@@ -3,6 +3,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.min;
+
 public record Student<courseType>(String firstName, String lastName, int age, courseType course, int studentId){
 
     public static void PrintStudentsByCourseTypeFun(ArrayList<Student> students){
@@ -10,6 +12,64 @@ public record Student<courseType>(String firstName, String lastName, int age, co
                 .collect(Collectors.<Student, Object>groupingBy(Student::course))
                 .forEach((c,s) -> System.out.println("Course is " +c + " Student Is " + s));
     }
+
+
+
+    public static void mapStudentAgeMin(ArrayList<Student> students){
+        students
+                .stream()
+                .mapToInt(s -> s.age())
+                .min()
+                .ifPresent(System.out::println);
+    }
+
+
+
+    public static void mapStudentAge(ArrayList<Student> students){
+        students
+                .stream()
+                .mapToInt(s -> s.age())
+                .forEach(System.out::println);
+    }
+
+    public static void mapStudentAgeSorted(ArrayList<Student> students){
+        students
+                .stream()
+                .mapToInt(s -> s.age()).sorted()
+                .forEach(System.out::println);
+    }
+
+    public static void mapStudentAddAllAges(ArrayList<Student> students){
+        students
+                .stream()
+                .mapToInt(s -> s.age())
+                .reduce((a,b) -> a+b)
+                .ifPresent(System.out::println);
+    }
+
+    public static void mapStudentAgeMax(ArrayList<Student> students){
+        students
+                .stream()
+                .mapToInt(s -> s.age())
+                .max()
+                .ifPresent(System.out::println);
+    }
+
+    public static void mapStudentAgeAverage(ArrayList<Student> students){
+        students
+                .stream()
+                .mapToInt(s -> s.age())
+                .average()
+                .ifPresent(System.out::println);
+    }
+
+    public static void returnAllCsStudents(ArrayList<Student> students){
+       boolean result = students
+                .stream()
+                .allMatch(s -> s.course().equals(CourseType.CS));
+        System.out.println(result);
+    }
+
 
 //method to print all from the students arraylist
     public static void printALl(ArrayList<Student> students) {

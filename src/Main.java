@@ -35,6 +35,11 @@ public class Main {
 
 
 
+
+        //Student.returnAllCsStudents(students);
+       // Student.mapStudentAge(students);
+        //Student.mapStudentAddAllAges(students);
+
         //Student.printALl(students);
 
 
