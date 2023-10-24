@@ -34,19 +34,11 @@ public class Main {
 
 
 
+          menu(students);
 
+    }
 
-        //Student.returnAllCsStudents(students);
-       // Student.mapStudentAge(students);
-        //Student.mapStudentAddAllAges(students);
-
-        //Student.printALl(students);
-
-
-
-
-        //Student.PrintStudentsByCourseTypeFun(students);
-
+    public static void addStudent(ArrayList<Student> students) {
         System.out.print("enter student first name: ");
         Scanner scanner = new Scanner(System.in);
         String firstName = scanner.nextLine();
@@ -55,28 +47,105 @@ public class Main {
         String lastName = scanner.nextLine();
 
         System.out.print("enter student age: ");
+        if(!scanner.hasNextInt()){
+            System.out.println("Invalid age, please enter a valid age");
+            scanner.next();
+        }
         int age = scanner.nextInt();
 
-        System.out.print("enter student course: ");
-        CourseType course = CourseType.valueOf(scanner.next().toUpperCase());
 
-        System.out.print("enter student id: ");
-        int studentId = scanner.nextInt();
+        System.out.print("enter student course: ");
+        //check if the courseType is valid else ask again using try and catch
+        CourseType course = null; //initialize course to null
+        while (course == null){
+            String courseString = scanner.next();
+            try{
+                course = CourseType.valueOf(courseString.toUpperCase());//convert the string to uppercase
+            }catch (IllegalArgumentException e){
+                System.out.println("Invalid course type, please enter a valid course type");
+            }
+        }
+
+        //get the highest value of id in the arraylist and add 1 to it
+        int studentId = students.stream().mapToInt(s -> s.studentId()).max().getAsInt() + 1;
         Student.addStudent(students, firstName, lastName, age, course, studentId);
 
+    }
 
-        Student.printStudentsGroupedByCourseType(students);
-
+    public static void removeStudent(ArrayList<Student> students){
+      Scanner  scanner = new Scanner(System.in);
         System.out.println("Enter student id to remove: ");
         int id = scanner.nextInt();
         Student.removeStudent(students, id);
         Student.printALl(students);
+    }
 
-
+    public static void getStudentById(ArrayList<Student> students){
+        Scanner  scanner = new Scanner(System.in);
+        System.out.println("Enter student id to get: ");
+        int id = scanner.nextInt();
+        Student.getStudentById(students, id);
+        Student.printALl(students);
     }
 
 
+    public static void enter(){
+        System.out.println("Press enter to continue");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+    }
+
+
+    public static void menu(ArrayList<Student> students){
+
+        System.out.println("Please Select the function you want to perform: ");
+        System.out.println("1. Add a student");
+        System.out.println("2. Remove a student");
+        System.out.println("3. Print all students");
+        System.out.println("4. Print all students grouped by course type");
+        System.out.println("5. Get student by id");
+
+
+        Scanner scanner = new Scanner(System.in);
+        int select = scanner.nextInt();
+        switch(select){
+            case 1:
+                addStudent(students);
+                menu(students);
+                break;
+
+            case 2:
+                removeStudent(students);
+                menu(students);
+                break;
+
+            case 3:
+                Student.printALl(students);
+                enter();
+                menu(students);
+                break;
+
+            case 4:
+                Student.printStudentsGroupedByCourseType(students);
+                enter();
+                menu(students);
+                break;
+
+            case 5:
+                getStudentById(students);
+                enter();
+                menu(students);
+                break;
 
 
 
+
+            default:
+                System.out.println("Invalid input");
+                menu(students);
+                break;
+        }
+
+
+    }
 }

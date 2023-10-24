@@ -13,8 +13,6 @@ public record Student<courseType>(String firstName, String lastName, int age, co
                 .forEach((c,s) -> System.out.println("Course is " +c + " Student Is " + s));
     }
 
-
-
     public static void mapStudentAgeMin(ArrayList<Student> students){
         students
                 .stream()
@@ -92,7 +90,6 @@ public static void addStudent(ArrayList<Student> students, String firstName, Str
 public static void removeStudent(ArrayList<Student> students, int studentId) {
         students.removeIf(s -> s.studentId() == studentId);
     }
-
 
     public static void printStudentsGroupedByCourseType(ArrayList<Student> students){
         //a hashmap and group students by course with course as the key
