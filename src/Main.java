@@ -34,17 +34,27 @@ public class Main {
 
 
 
-          menu(students);
+          menu(students);//Start the menu function
 
     }
 
     public static void addStudent(ArrayList<Student> students) {
         System.out.print("enter student first name: ");
+        //check if the first name does not contain a number
         Scanner scanner = new Scanner(System.in);
         String firstName = scanner.nextLine();
+        while (firstName.matches(".*\\d.*")){
+            System.out.println("Invalid name, please enter a valid name");
+            firstName = scanner.nextLine();
+        }
+
 
         System.out.print("enter student last name: ");
         String lastName = scanner.nextLine();
+        while (lastName.matches(".*\\d.*")){
+            System.out.println("Invalid name, please enter a valid name");
+            lastName = scanner.nextLine();
+        }
 
         System.out.print("enter student age: ");
         if(!scanner.hasNextInt()){
@@ -85,7 +95,7 @@ public class Main {
         System.out.println("Enter student id to get: ");
         int id = scanner.nextInt();
         Student.getStudentById(students, id);
-        Student.printALl(students);
+        enter();
     }
 
 
@@ -136,9 +146,6 @@ public class Main {
                 enter();
                 menu(students);
                 break;
-
-
-
 
             default:
                 System.out.println("Invalid input");
