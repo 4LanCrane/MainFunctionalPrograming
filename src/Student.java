@@ -7,12 +7,22 @@ import static java.util.Collections.min;
 
 public record Student<courseType>(String firstName, String lastName, int age, courseType course, int studentId){
 
+
+    /** method to print all the students in the arraylist and groups them by course
+     *
+     * @param students
+     */
     public static void PrintStudentsByCourseTypeFun(ArrayList<Student> students){
         students.stream()// create a stream
                 .collect(Collectors.<Student, Object>groupingBy(Student::course))//group the students by course
                 .forEach((c,s) -> System.out.println("Course is " +c + " Student Is " + s));//print the course and the student
     }
 
+
+    /** method to map the student age and print the min age
+     *
+     * @param students
+     */
     public static void mapStudentAgeMin(ArrayList<Student> students){
         students
                 .stream()//create a stream
@@ -22,7 +32,10 @@ public record Student<courseType>(String firstName, String lastName, int age, co
     }
 
 
-
+    /**
+     *
+     * @param students method to map the student age and prints all the ages
+     */
     public static void mapStudentAge(ArrayList<Student> students){
         students
                 .stream()//create a stream
@@ -30,6 +43,9 @@ public record Student<courseType>(String firstName, String lastName, int age, co
                 .forEach(System.out::println);//print the age
     }
 
+    /**
+     * @param students method to map the student and then sort the age and print it
+     */
     public static void mapStudentAgeSorted(ArrayList<Student> students){
         students
                 .stream()//create a stream
@@ -37,6 +53,9 @@ public record Student<courseType>(String firstName, String lastName, int age, co
                 .forEach(System.out::println);//print the sorted age
     }
 
+    /**
+     * @param students method to map the student ages and then add all the ages and print it
+     */
     public static void mapStudentAddAllAges(ArrayList<Student> students){
         students
                 .stream()//create a stream
@@ -45,6 +64,9 @@ public record Student<courseType>(String firstName, String lastName, int age, co
                 .ifPresent(System.out::println);//print the sum
     }
 
+    /**
+     * @param students method to map the student ages and get the max age and print it
+     */
     public static void mapStudentAgeMax(ArrayList<Student> students){
         students
                 .stream()//create a stream
