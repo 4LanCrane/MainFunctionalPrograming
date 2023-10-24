@@ -72,7 +72,7 @@ public record Student<courseType>(String firstName, String lastName, int age, co
                 .stream()//create a stream
                 .mapToInt(s -> s.age())//map the age
                 .max()//get the max age
-                .ifPresent(System.out::println);//print the max age
+                .ifPresent(System.out::println);//print the max Student age
     }
 
     public static void mapStudentAgeAverage(ArrayList<Student> students){
