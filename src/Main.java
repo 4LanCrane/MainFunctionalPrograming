@@ -1,9 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 
 public class Main {
@@ -14,17 +10,17 @@ public class Main {
 
         ArrayList<Student> students = new ArrayList<Student>();//create an arraylist of students
         //add students to the arraylist
-        students.add(new Student("Alan", "Cray", 12, CourseType.CS, 1));
-        students.add(new Student("Bonny", "Tom", 18, CourseType.CSG, 2));
-        students.add(new Student("Jeff", "Mathetew", 12, CourseType.SE, 3));
-        students.add(new Student("John", "King", 22, CourseType.SE, 4));
-        students.add(new Student("Tom", "bobby", 32, CourseType.SE, 5));
-        students.add(new Student("Alisha", "reed", 12, CourseType.SE, 6));
-        students.add(new Student("Terry", "Johnson", 14, CourseType.SE, 7));
-        students.add(new Student("Thomas", "Goldson", 16, CourseType.SE, 8));
-        students.add(new Student("Harry", "Johnson", 18, CourseType.SE, 9));
-        students.add(new Student("Danny", "Roberts", 17, CourseType.SE, 10));
-        students.add(new Student("teff", "bobby", 14, CourseType.SE, 11));
+        students.add(new Student("Alan", "Cray", 12, CourseType.CS, 8,1));
+        students.add(new Student("Bonny", "Tom", 18, CourseType.CSG,6, 2));
+        students.add(new Student("Jeff", "Mathetew", 12, CourseType.SE, 4,3));
+        students.add(new Student("John", "King", 22, CourseType.SE, 4,4));
+        students.add(new Student("Tom", "bobby", 32, CourseType.SE, 5,5));
+        students.add(new Student("Alisha", "reed", 12, CourseType.SE, 6,6));
+        students.add(new Student("Terry", "Johnson", 14, CourseType.SE, 7,7));
+        students.add(new Student("Thomas", "Goldson", 16, CourseType.SE, 8,8));
+        students.add(new Student("Harry", "Johnson", 18, CourseType.SE, 9,9));
+        students.add(new Student("Danny", "Roberts", 17, CourseType.SE, 8,10));
+        students.add(new Student("teff", "bobby", 14, CourseType.SE, 8,11));
 
 
 
@@ -73,9 +69,18 @@ public class Main {
             }
         }
 
+        System.out.print("enter student grade: ");
+        //check if the age is a number else ask again
+        if(!scanner.hasNextInt()){
+            System.out.println("Invalid age, please enter a grade");
+            scanner.next();
+        }
+        int grade = scanner.nextInt();
+
+
         //get the highest value of id in the arraylist and add 1 to it
         int studentId = students.stream().mapToInt(s -> s.studentId()).max().getAsInt() + 1;
-        Student.addStudent(students, firstName, lastName, age, course, studentId);
+        Student.addStudent(students, firstName, lastName, age, course, grade, studentId);
 
     }
 
@@ -95,6 +100,20 @@ public class Main {
         enter();//call the enter method to pause the program
     }
 
+   public static void getCourseAndSortByGrade(ArrayList<Student> students, CourseType course){
+     System.out.println("please enter the course type: ");
+        Scanner scanner = new Scanner(System.in);
+        while (course == null){
+            String courseString = scanner.next();
+            try{
+                course = CourseType.valueOf(courseString.toUpperCase());//convert the string to uppercase
+            }catch (IllegalArgumentException e){
+                System.out.println("Invalid course type, please enter a valid course type");
+            }
+        }
+        Student.getStudentsByCourseType(students, course);
+    }
+
 
     public static void enter(){
         System.out.println("Press enter to continue");//ask the user to press enter to continue
@@ -112,6 +131,7 @@ public class Main {
         System.out.println("3. Print all students");
         System.out.println("4. Print all students grouped by course type");
         System.out.println("5. Get student by id");
+        System.out.println("6. Get all students by course type and sort by grade decending");
 
 
         Scanner scanner = new Scanner(System.in);//create a scanner object
@@ -147,6 +167,12 @@ public class Main {
 
             default:
                 System.out.println("Invalid input");
+                menu(students);//call the menu method
+                break;
+
+            case 6:
+                getCourseAndSortByGrade(students, null);//call the getCourseAndSortByGrade method
+                enter();//call the enter method
                 menu(students);//call the menu method
                 break;
         }

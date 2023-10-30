@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Collections.min;
 
-public record Student<courseType>(String firstName, String lastName, int age, courseType course, int studentId){
+public record Student<courseType>(String firstName, String lastName, int age, courseType course,int grade, int studentId){
 
 
     /** method to print all the students in the arraylist and groups them by course
@@ -103,8 +103,8 @@ public record Student<courseType>(String firstName, String lastName, int age, co
 
 
     //method to add a studnet by adding name, age, course and student id
-public static void addStudent(ArrayList<Student> students, String firstName, String lastName, int age, CourseType course, int studentId) {
-        students.add(new Student(firstName, lastName, age, course, studentId));//add the student to the arraylist
+public static void addStudent(ArrayList<Student> students, String firstName, String lastName, int age, CourseType course,int grade, int studentId) {
+        students.add(new Student(firstName, lastName, age, course,grade, studentId));//add the student to the arraylist
     }
 
 
@@ -132,5 +132,13 @@ public static void removeStudent(ArrayList<Student> students, int studentId) {
         }
 
     }
+    //Gets all students on a given module from user input and sort entries in descending order, based on marks.
+    public static void getStudentsByCourseType(ArrayList<Student> students, CourseType courseType){
+        students.stream()//create a stream
+                .filter(s -> s.course().equals(courseType))//filter the students by course
+                .sorted((s1,s2) -> s2.grade() - s1.grade())//sort the students by grade
+                .forEach(System.out::println);//print the students
+    }
+
 }
 
