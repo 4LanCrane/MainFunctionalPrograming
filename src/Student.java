@@ -140,5 +140,20 @@ public static void removeStudent(ArrayList<Student> students, int studentId) {
                 .forEach(System.out::println);//print the students
     }
 
+    //gets all students whose name starts with a given letter from user input
+    public static void getStudentByFirstLetter(ArrayList<Student> students, String firstLetter){
+        students.stream()//create a stream
+                .filter(s -> s.firstName().startsWith(firstLetter))//filter the students by first letter
+                .forEach(System.out::println);//print the students
+    }
+
+    public static void getStudentByName(ArrayList<Student> students, String name){
+        students.stream()//create a stream
+                .filter(s -> s.firstName().equals(name))//filter the students by name
+                .forEach(System.out::println);//print the students
+    }
+
+
+
 }
 

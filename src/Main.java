@@ -24,7 +24,7 @@ public class Main {
 
 
 
-          menu(students);//Start the menu function
+          menu(students);//Start menu function
 
     }
 
@@ -60,8 +60,8 @@ public class Main {
         System.out.print("enter student course: ");
         //check if the courseType is valid else ask again using try and catch
         CourseType course = null; //initialize course to null
-        while (course == null){
-            String courseString = scanner.next();
+        while (course == null){//loop until the course is valid
+            String courseString = scanner.next();//get the course from the user
             try{
                 course = CourseType.valueOf(courseString.toUpperCase());//convert the string to uppercase
             }catch (IllegalArgumentException e){
@@ -79,8 +79,8 @@ public class Main {
 
 
         //get the highest value of id in the arraylist and add 1 to it
-        int studentId = students.stream().mapToInt(s -> s.studentId()).max().getAsInt() + 1;
-        Student.addStudent(students, firstName, lastName, age, course, grade, studentId);
+        int studentId = students.stream().mapToInt(s -> s.studentId()).max().getAsInt() + 1;//get the highest value of id in the arraylist and add 1 to it
+        Student.addStudent(students, firstName, lastName, age, course, grade, studentId);//call the addStudent method in the Student class
 
     }
 
@@ -100,6 +100,15 @@ public class Main {
         enter();//call the enter method to pause the program
     }
 
+
+    public static void getStudentByName(ArrayList<Student> students){
+        Scanner  scanner = new Scanner(System.in);//create a scanner object
+        System.out.println("Enter student name to get: ");//ask the user to enter the name
+        String name = scanner.next();//get the name from the user
+        Student.getStudentByName(students, name);//call the getStudentByName method in the Student class
+    }
+
+
    public static void getCourseAndSortByGrade(ArrayList<Student> students, CourseType course){
      System.out.println("please enter the course type: ");
         Scanner scanner = new Scanner(System.in);
@@ -111,7 +120,15 @@ public class Main {
                 System.out.println("Invalid course type, please enter a valid course type");
             }
         }
-        Student.getStudentsByCourseType(students, course);
+        Student.getStudentsByCourseType(students, course);//call the getStudentsByCourseType method in the Student class
+    }
+
+
+    public static void getStudentByFirstLetterInName(ArrayList<Student> students){
+        System.out.println("please enter the first letter of the name: ");
+        Scanner scanner = new Scanner(System.in);//create a scanner object
+        String letter = scanner.next().toUpperCase();//get the letter from the user and convert it to uppercase
+        Student.getStudentByFirstLetter(students, letter);//call the getStudentByFirstLetter method in the Student class
     }
 
 
@@ -132,6 +149,8 @@ public class Main {
         System.out.println("4. Print all students grouped by course type");
         System.out.println("5. Get student by id");
         System.out.println("6. Get all students by course type and sort by grade decending");
+        System.out.println("7. Get all students whose name starts with a given letter");
+        System.out.println("8. Get all students whose name is a given name");
 
 
         Scanner scanner = new Scanner(System.in);//create a scanner object
@@ -165,16 +184,31 @@ public class Main {
                 menu(students);//call the menu method
                 break;
 
-            default:
-                System.out.println("Invalid input");
-                menu(students);//call the menu method
-                break;
 
             case 6:
                 getCourseAndSortByGrade(students, null);//call the getCourseAndSortByGrade method
                 enter();//call the enter method
                 menu(students);//call the menu method
                 break;
+
+            case 7:
+                getStudentByFirstLetterInName(students);//call the getStudentByFirstLetterInName method
+                enter();//call the enter method
+                menu(students);//call the menu method
+                break;
+
+
+            case 8:
+                getStudentByName(students);//call the getStudentByName method
+                enter();//call the enter method
+                menu(students);//call the menu method
+                break;
+
+            default:
+                System.out.println("Invalid input");
+                menu(students);//call the menu method
+                break;
+
         }
 
 
