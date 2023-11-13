@@ -22,114 +22,9 @@ public class Main {
         students.add(new Student("Danny", "Roberts", 17, CourseType.SE, 8,10));
         students.add(new Student("teff", "bobby", 14, CourseType.SE, 8,11));
 
-
-
           menu(students);//Start menu function
-
     }
 
-    public static void addStudent(ArrayList<Student> students) {
-        System.out.print("enter student first name: ");
-
-        Scanner scanner = new Scanner(System.in);
-        String firstName = scanner.nextLine();
-        //check if the name contains a number else ask again
-        while (firstName.matches(".*\\d.*")){
-            System.out.println("Invalid name, please enter a valid name");
-            firstName = scanner.nextLine();
-        }
-
-
-        System.out.print("enter student last name: ");
-        String lastName = scanner.nextLine();
-        //check if the name contains a number else ask again
-        while (lastName.matches(".*\\d.*")){
-            System.out.println("Invalid name, please enter a valid name");
-            lastName = scanner.nextLine();
-        }
-
-        System.out.print("enter student age: ");
-        //check if the age is a number else ask again
-        if(!scanner.hasNextInt()){
-            System.out.println("Invalid age, please enter a valid age");
-            scanner.next();
-        }
-        int age = scanner.nextInt();
-
-
-        System.out.print("enter student course: ");
-        //check if the courseType is valid else ask again using try and catch
-        CourseType course = null; //initialize course to null
-        while (course == null){//loop until the course is valid
-            String courseString = scanner.next();//get the course from the user
-            try{
-                course = CourseType.valueOf(courseString.toUpperCase());//convert the string to uppercase
-            }catch (IllegalArgumentException e){
-                System.out.println("Invalid course type, please enter a valid course type");
-            }
-        }
-
-        System.out.print("enter student grade: ");
-        //check if the age is a number else ask again
-        if(!scanner.hasNextInt()){
-            System.out.println("Invalid age, please enter a grade");
-            scanner.next();
-        }
-        int grade = scanner.nextInt();
-
-
-        //get the highest value of id in the arraylist and add 1 to it
-        int studentId = students.stream().mapToInt(s -> s.studentId()).max().getAsInt() + 1;//get the highest value of id in the arraylist and add 1 to it
-        Student.addStudent(students, firstName, lastName, age, course, grade, studentId);//call the addStudent method in the Student class
-
-    }
-
-    public static void removeStudent(ArrayList<Student> students){
-      Scanner  scanner = new Scanner(System.in);
-        System.out.println("Enter student id to remove: ");
-        int id = scanner.nextInt();//get the id from the user
-        Student.removeStudent(students, id);//call the removeStudent method in the Student class
-        Student.printALl(students);//print all the students
-    }
-
-    public static void getStudentById(ArrayList<Student> students){
-        Scanner  scanner = new Scanner(System.in);//create a scanner object
-        System.out.println("Enter student id to get: ");//ask the user to enter the id
-        int id = scanner.nextInt();//get the id from the user
-        Student.getStudentById(students, id);//call the getStudentById method in the Student class
-        enter();//call the enter method to pause the program
-    }
-
-
-    public static void getStudentByName(ArrayList<Student> students){
-        Scanner  scanner = new Scanner(System.in);//create a scanner object
-        System.out.println("Enter student name to get: ");//ask the user to enter the name
-        String name = scanner.next();//get the name from the user
-        Student.getStudentByName(students, name);//call the getStudentByName method in the Student class
-    }
-
-
-   public static void getCourseAndSortByGrade(ArrayList<Student> students, CourseType course){
-     System.out.println("please enter the course type: ");
-        Scanner scanner = new Scanner(System.in);
-        while (course == null){
-            String courseString = scanner.next();
-            try{
-                course = CourseType.valueOf(courseString.toUpperCase());//convert the string to uppercase
-            }catch (IllegalArgumentException e){
-                System.out.println("Invalid course type, please enter a valid course type");
-            }
-        }
-        Student.getStudentsByCourseType(students, course);//call the getStudentsByCourseType method in the Student class
-    }
-
-
-    public static void getStudentByFirstLetterInName(ArrayList<Student> students){
-        System.out.println("please enter the first letter of the name: ");
-        Scanner scanner = new Scanner(System.in);//create a scanner object
-        String letter = scanner.next().toUpperCase();//get the letter from the user and convert it to uppercase
-        Student.getStudentByFirstLetter(students, letter);//call the getStudentByFirstLetter method in the Student class
-    }
 
 
     public static void enter(){
@@ -157,49 +52,48 @@ public class Main {
         int select = scanner.nextInt();//get the user input
         switch(select){//switch the user input
             case 1:
-                addStudent(students);//call the addStudent method
+                Student.addStudent(students);//call the addStudent method   from student class
                 menu(students);//call the menu method
                 break;
 
             case 2:
-                removeStudent(students);//call the removeStudent method
+                Student.removeStudent(students);//call the removeStudent method from student class
                 menu(students);//call the menu method
                 break;
 
             case 3:
-                Student.printALl(students);//call the printAll method
+                Student.printALl(students);//call the printAll method from student class
                 enter();//call the enter method
                 menu(students);//call the menu method
                 break;
 
             case 4:
-                Student.printStudentsGroupedByCourseType(students);//call the printStudentsGroupedByCourseType method
-                enter();//call the enter method
+                Student.PrintStudentsByCourseTypeFun(students);//call the printStudentsGroupedByCourseType method from student class
                 menu(students);//call the menu method
                 break;
 
             case 5:
-                getStudentById(students);//call the getStudentById method
-                enter();//call the enter method
+                Student.getStudentById(students);//call the getStudentById method from student class
+                enter();//call the enter method to pause the program
                 menu(students);//call the menu method
                 break;
-
+//
 
             case 6:
-                getCourseAndSortByGrade(students, null);//call the getCourseAndSortByGrade method
+                Student.getStudentsByCourseType(students);//call the getCourseAndSortByGrade method from student class
                 enter();//call the enter method
                 menu(students);//call the menu method
                 break;
 
             case 7:
-                getStudentByFirstLetterInName(students);//call the getStudentByFirstLetterInName method
+                Student.getStudentByFirstLetter(students);//call the getStudentByFirstLetterInName method from student class
                 enter();//call the enter method
                 menu(students);//call the menu method
                 break;
 
 
             case 8:
-                getStudentByName(students);//call the getStudentByName method
+                Student.getStudentByName(students);//call the getStudentByName method from student class
                 enter();//call the enter method
                 menu(students);//call the menu method
                 break;
