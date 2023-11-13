@@ -69,6 +69,7 @@ public class Main {
 
             case 4:
                 Student.PrintStudentsByCourseTypeFun(students);//call the printStudentsGroupedByCourseType method from student class
+                enter();//call the enter method to pause the program
                 menu(students);//call the menu method
                 break;
 
