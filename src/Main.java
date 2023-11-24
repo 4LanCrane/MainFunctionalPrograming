@@ -52,7 +52,7 @@ public class Main {
         int select = scanner.nextInt();//get the user input
         switch(select){//switch the user input
             case 1:
-                Student.addStudent(students);//call the addStudent method   from student class
+                Student.addStudentFP(students);//call the addStudent method   from student class
                 menu(students);//call the menu method
                 break;
 
@@ -81,7 +81,7 @@ public class Main {
 //
 
             case 6:
-                Student.getStudentsByCourseType(students);//call the getCourseAndSortByGrade method from student class
+                Student.getStudentsByCourseTypeOo(students);//call the getCourseAndSortByGrade method from student class
                 enter();//call the enter method
                 menu(students);//call the menu method
                 break;
@@ -94,6 +94,7 @@ public class Main {
 
 
             case 8:
+
                 Student.getStudentByName(students);//call the getStudentByName method from student class
                 enter();//call the enter method
                 menu(students);//call the menu method
