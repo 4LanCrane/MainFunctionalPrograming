@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static com.sun.tools.javac.util.StringUtils.toUpperCase;
+
 import static java.util.Collections.min;
 
 public record Student<courseType>(String firstName, String lastName, int age, courseType course,int grade, int studentId) {
@@ -227,8 +227,8 @@ public record Student<courseType>(String firstName, String lastName, int age, co
 
         Scanner scanner = new Scanner(System.in);
 
-        String firstName = getUserInput("Enter student first name: ", Student::containsDigit, scanner);
-        String lastName = getUserInput("Enter student last name: ",Student::containsDigit, scanner);
+        String firstName = getUserInput("Enter student first name: ", s ->containsDigit(s), scanner);
+        String lastName = getUserInput("Enter student last name: ",s -> containsDigit(s), scanner);
         int age = Integer.parseInt(getUserInput("Enter student age: ", s -> !containsDigit(s), scanner));
 
 
