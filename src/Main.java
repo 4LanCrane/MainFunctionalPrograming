@@ -62,7 +62,7 @@ public class Main {
                 break;
 
             case 3:
-                Student.printALl(students);//call the printAll method from student class
+                Student.printAllStudentsOo(students);//call the printAll method from student class
                 enter();//call the enter method
                 menu(students);//call the menu method
                 break;
@@ -81,7 +81,7 @@ public class Main {
 //
 
             case 6:
-                Student.getStudentsByCourseTypeOo(students);//call the getCourseAndSortByGrade method from student class
+                Student.getStudentsByCourseType(students);//call the getCourseAndSortByGrade method from student class
                 enter();//call the enter method
                 menu(students);//call the menu method
                 break;
@@ -95,7 +95,7 @@ public class Main {
 
             case 8:
 
-                Student.getStudentByName(students);//call the getStudentByName method from student class
+                Student.addStudent(students);//call the getStudentByName method from student class
                 enter();//call the enter method
                 menu(students);//call the menu method
                 break;
