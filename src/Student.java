@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.List;
 
 import static java.util.Collections.min;
+import static java.util.stream.Collectors.groupingBy;
 
 public record Student<courseType>(String firstName, String lastName, int age, courseType course,int grade, int studentId) {
 
@@ -18,7 +19,7 @@ public record Student<courseType>(String firstName, String lastName, int age, co
      */
     public static void PrintStudentsByCourseTypeFun(List<Student> students) {
         students.stream()// create a stream
-                .collect(Collectors.<Student, Object>groupingBy(Student::course))//group the students by course
+                .collect(groupingBy(Student::course))//group the students by course
                 .forEach((c, s) -> System.out.println("Course is " + c + " Student Is " + s));//print the course and the student
     }
 
@@ -223,7 +224,7 @@ public record Student<courseType>(String firstName, String lastName, int age, co
         Scanner scanner = new Scanner(System.in);
 
         String firstName = getUserInput("Enter student first name: ", s ->doesNotContainDigits(s), scanner);
-        String lastName = getUserInput("Enter student last name: ",s -> doesNotContainDigits(s), scanner);
+        String lastName = getUserInput("Enter student last name: ", Student::doesNotContainDigits, scanner);
         int age = Integer.parseInt(getUserInput("Enter student age: ", s -> !doesNotContainDigits(s), scanner));
         String course = getUserInput("Enter student course: ", s -> isValidCourse(s), scanner);
         int grade = Integer.parseInt(getUserInput("Enter student grade: ", s -> !doesNotContainDigits(s), scanner));
@@ -249,6 +250,10 @@ public record Student<courseType>(String firstName, String lastName, int age, co
     }
 
 
+    /**
+     * @param course method to check if the course is valid
+     * @return
+     */
     private static boolean isValidCourse(String course) {
         try {
             CourseType.valueOf(course.toUpperCase());//convert the string to uppercase
@@ -270,6 +275,7 @@ public record Student<courseType>(String firstName, String lastName, int age, co
         }
         return input;
     }
+
 
 
     private static boolean doesNotContainDigits(String input) {
@@ -308,8 +314,8 @@ public static void removeStudent(List<Student> students) {
         Scanner  scanner = new Scanner(System.in);
         System.out.println("Enter student id to remove: ");
         int studentId = scanner.nextInt();//get the id from the user
-        for (Student s : students){//loop through the students arraylist
-            if (s.studentId() == studentId){//check if the student id is equal to the id from the user
+        for (int s = 0; s< students.size(); s++){//loop through the students arraylist
+            if (s == studentId){//check if the student id is equal to the id from the user
                 students.remove(s);//remove the student from the arraylist
             }
         }
@@ -321,16 +327,8 @@ public static void removeStudent(List<Student> students) {
     public static void getStudentsByCourseType(List<Student> students){
         System.out.println("please enter the course type: ");
         Scanner scanner = new Scanner(System.in);
-        CourseType course = null;
-        while (course == null){
             String courseString = scanner.next();
-            try{
-                course = CourseType.valueOf(courseString.toUpperCase());//convert the string to uppercase
-            }catch (IllegalArgumentException e){
-                System.out.println("Invalid course type, please enter a valid course type");
-            }
-        }
-        CourseType finalCourse = course;
+        CourseType finalCourse = CourseType.valueOf(courseString);
         students.stream()//create a stream
                 .filter(s -> s.course().equals(finalCourse))//filter the students by course
                 .sorted((s1,s2) -> s2.grade() - s1.grade())//sort the students by grade
@@ -340,22 +338,16 @@ public static void removeStudent(List<Student> students) {
 
 
     //Gets all students on a given module from user input and sort entries in descending order, based on marks using an oo approach
-    public static void getStudentsByCourseTypeOo(List<Student> students){
+    public static void getStudentsByCourseTypeOo2(List<Student> students){
         System.out.println("please enter the course type: ");
         Scanner scanner = new Scanner(System.in);
-        CourseType course = null;
-        while (course == null){
-            String courseString = scanner.next();
-            try{
-                course = CourseType.valueOf(courseString.toUpperCase());//convert the string to uppercase
-            }catch (IllegalArgumentException e){
-                System.out.println("Invalid course type, please enter a valid course type");
-            }
-        }
-        CourseType finalCourse = course;
+        String courseString = scanner.next();
+        CourseType course = CourseType.valueOf(courseString);
+
+
         ArrayList<Student> temp = new ArrayList<>();//create a new arraylist
         for (Student s : students){//loop through the students arraylist
-            if (s.course().equals(finalCourse)){//check if the student course is equal to the course from the user
+            if (s.course().equals(course)){//check if the student course is equal to the course from the user
                 temp.add(s);//add the student to the arraylist
             }
         }
@@ -364,6 +356,66 @@ public static void removeStudent(List<Student> students) {
             System.out.println(s);//print the student
         }
     }
+
+    // getStudentsByCourseTypeOo but sort the entries in ascending order, based on marks without using sort or any functioal programming
+    public static void getStudentsByCourseTypeOo3(List<Student> students){
+        System.out.println("please enter the course type: ");
+        Scanner scanner = new Scanner(System.in);
+        String courseString = scanner.next();
+        CourseType course = CourseType.valueOf(courseString);
+
+        ArrayList<Student> SortedArrayList = new ArrayList<>();//create a new arraylist
+        for (Student s : students){//loop through the students arraylist
+            if (s.course().equals(course)){//check if the student course is equal to the course from the user
+                SortedArrayList.add(s);//add the student to the arraylist
+            }
+        }
+        for (int i = 0; i <  SortedArrayList.size(); i++) {//loop through the temp arraylist
+            for (int j = i + 1; j <  SortedArrayList.size(); j++) {//loop through the temp arraylist
+                if ( SortedArrayList.get(i).grade() >  SortedArrayList.get(j).grade()) {//check if the student grade is greater than the next student grade
+                    Student tempStudent =  SortedArrayList.get(i);//set the temp student to the current student
+                    SortedArrayList.set(i,  SortedArrayList.get(j));//set the current student to the next student
+                    SortedArrayList.set(j, tempStudent);//set the next student to the temp student
+                }
+            }
+        }
+        for (Student s :  SortedArrayList){//loop through the temp arraylist
+            System.out.println(s);//print the student
+        }
+    }
+
+
+    // getStudentsByCourseTypeOo but sort the entries in descending order, based on marks without using sort or any functioal programming
+    public static void getStudentsByCourseTypeOo(List<Student> students){
+        System.out.println("please enter the course type: ");
+        Scanner scanner = new Scanner(System.in);
+        String courseString = scanner.next();
+        CourseType course = CourseType.valueOf(courseString);
+
+        ArrayList<Student> SortedArrayList = new ArrayList<>();//create a new arraylist
+        for (Student s : students){//loop through the students arraylist
+            if (s.course().equals(course)){//check if the student course is equal to the course from the user
+                SortedArrayList.add(s);//add the student to the arraylist
+            }
+        }
+        for (int i = 0; i <  SortedArrayList.size(); i++) {//loop through the temp arraylist
+            for (int j = i + 1; j <  SortedArrayList.size(); j++) {//loop through the temp arraylist
+                if ( SortedArrayList.get(i).grade() <  SortedArrayList.get(j).grade()) {//check if the student grade is less than the next student grade
+                    Student tempStudent =  SortedArrayList.get(i);//set the temp student to the current student
+                    SortedArrayList.set(i,  SortedArrayList.get(j));//set the current student to the next student
+                    SortedArrayList.set(j, tempStudent);//set the next student to the temp student
+                }
+            }
+        }
+        for (Student s :  SortedArrayList){//loop through the temp arraylist
+            System.out.println(s);//print the student
+        }
+    }
+
+
+
+
+
 
     //gets all students whose name starts with a given letter from user input
     public static void getStudentByFirstLetter(List<Student> students){
@@ -408,6 +460,23 @@ public static void removeStudent(List<Student> students) {
             }
         }
     }
+
+
+    //gets all students whose name is a given name from user input using an oo approach using a for loop
+    public static void getStudentByNameOo2(List<Student> students){
+        Scanner  scanner = new Scanner(System.in);//create a scanner object
+        System.out.println("Enter student name to get: ");//ask the user to enter the name
+        String name = scanner.next();//get the name from the user
+        for (int s = 0; s< students.size(); s++){//loop through the students arraylist
+            if (students.get(s).firstName().equals(name)){//check if the student name is equal to the name from the user
+                System.out.println(students.get(s));//print the student
+            }
+        }
+    }
+
+
+
+
 
 
 

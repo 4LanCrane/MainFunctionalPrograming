@@ -81,7 +81,7 @@ public class Main {
 //
 
             case 6:
-                Student.getStudentsByCourseType(students);//call the getCourseAndSortByGrade method from student class
+                Student.getStudentsByCourseTypeOo3(students);//call the getCourseAndSortByGrade method from student class
                 enter();//call the enter method
                 menu(students);//call the menu method
                 break;
